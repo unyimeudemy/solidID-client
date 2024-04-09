@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { rihanna } from '../Images/ImageUrls'
 import { HistoryList } from './HistoryList'
+import { AddOrgForm } from './AddOrgForm'
 
 
 
@@ -98,7 +99,7 @@ export const UserProfileDisplay = ({
                 <HistoryList/>
                 :
                 (viewAddOrg &&
-                <div>AddOrg</div>
+                <AddOrgForm/>
             )
             )
         }

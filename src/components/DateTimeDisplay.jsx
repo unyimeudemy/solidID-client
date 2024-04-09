@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const DateTimeContainer = styled.div`
   font-size: 16px;
+  color: #222831;
 `;
 
 const formatDate = (dateString) => {
