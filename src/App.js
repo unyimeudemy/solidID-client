@@ -12,15 +12,16 @@ import { LandingPage } from "./pages/LandingPage.jsx";
 import { SigninPage } from "./pages/SigninPage.jsx";
 import { VerificationPage } from "./pages/VerificationPage.jsx";
 import { ProfilePage } from "./pages/ProfilePage.jsx";
-
-
-
-function App() {
+import { LogoutPage } from "./pages/LogoutPage.jsx";
+import { OrgSignUpPage } from "./pages/OrgSignUpPage.jsx";
+import { OrgSignInPage } from "./pages/OrgSignInPage.jsx";
 
 const Container = styled.div`
     background-color: #EEEEEE;
     height: 100vh;
 `
+
+function App() {
 
   return (
     <BrowserRouter basename ="/">
@@ -32,6 +33,9 @@ const Container = styled.div`
                     <Route path="/sign_in" element={<SigninPage/>}/>
                     <Route path="/verify" element={<VerificationPage/>}/>
                     <Route path="/profile" element={<ProfilePage/>}/>
+                    <Route path="/log_out" element={<LogoutPage/>}/>
+                    <Route path="/org_sign_up" element={<OrgSignUpPage/>}/>
+                    <Route path="/org_sign_in" element={<OrgSignInPage/>}/>
                 </Route>
             </Routes>
         </Container>

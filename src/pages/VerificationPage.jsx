@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { Header } from '../components/Header'
 import { rihanna } from '../Images/ImageUrls'
+import { useState } from 'react'
+import Axios from '../lib/api/axios'
+import { TokenInput } from '../components/TokenInput'
 
-export const VerificationPage = () => {
 
 const Container = styled.div`
 width: 100%;
@@ -53,7 +55,7 @@ const Field = styled.input`
     font-size: 20px;
     width: 200px;
     font-weight: 400;
-
+    padding-left: 10px;
 `
 
 const Title = styled.div`
@@ -64,9 +66,9 @@ const Title = styled.div`
 `
 
 const Input = styled.div`
-    height: 40px;
-width: 300px;
-border-radius: 15px;
+    /* height: 40px; */
+/* width: 300px; */
+/* border-radius: 15px; */
 display: flex;
 `
 
@@ -132,8 +134,36 @@ const Value = styled.div`
     font-weight: 700;
 `
 
+
+
+export const VerificationPage = () => {
+
+const [verificationToken, setVerificationToken] = useState("");
+
+const [verifiedUser, setVerifiedUser] = useState(null);
+
+console.log(verificationToken)
+
+const handleVerify = async (e) => {
+e.preventDefault();
+    try{
+    const res = await Axios.post(
+        "/identity/verify",
+        {
+            key: verificationToken
+        }
+    )
+    console.log(res);
+        setVerifiedUser(res.data);
+    }catch(error){
+        console.log(error.message);
+    }
+}
+
+
+    
   return (
-    <>
+    
     <Container>
         <Header/>
         <Wrapper>
@@ -143,28 +173,37 @@ const Value = styled.div`
                 </Box>
                 <ProfilePic src={rihanna} alt='Rihanna'/>
                 <Box2>
-                    <Key>Key: </Key>
-                    <Value>Value value</Value>
+                    <Key>First Name: </Key>
+                    <Value>{verifiedUser?.firstName}</Value>
                 </Box2>
                 <Box2>
-                    <Key>Key: </Key>
-                    <Value>Value value</Value>
+                    <Key>Last Name: </Key>
+                    <Value>{verifiedUser?.lastName}</Value>
                 </Box2>
                 <Box2>
-                    <Key>Key: </Key>
-                    <Value>Value value</Value>
+                    <Key>Nationality: </Key>
+                    <Value>{verifiedUser?.stateOfOrigin}</Value>
+                </Box2>
+                <Box2>
+                    <Key>Email: </Key>
+                    <Value>{verifiedUser?.email}</Value>
                 </Box2>
             </Right>
             <hr></hr>
             <Left>
-                <Title>Verify an Identity</Title>
+                <Title>Verify an identity</Title>
                 <Input>
-                    <Field/>
-                    <Button>Verify</Button>
+                <Field
+                type='text'
+                placeholder='Input a token'
+                onChange={(e) => setVerificationToken(e.target.value)}
+                />
+                <Button
+                onClick={handleVerify}
+                >Verify</Button>
                 </Input>
             </Left>
         </Wrapper>
     </Container>
-    </>
   )
 }
