@@ -138,7 +138,7 @@ export const OrgSignUpPage = () => {
     <Container>
         <Top>
         <SolidIDLogo/>
-        <Title>Sign in as an organization</Title>
+        <Title>Sign up as an organization</Title>
         </Top>
         <>
         <Input

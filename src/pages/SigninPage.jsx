@@ -86,7 +86,7 @@ export const SigninPage = () => {
         onClick={() => navigate("/org_sign_in")}
         >
             <InfoIcon/>
-            <div>Click here to sign up as an organization</div>
+            <div>Click here to sign in as an organization</div>
         </OrgSigUpLink>
         </Wrapper>
       )
