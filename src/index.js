@@ -6,6 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { store, persistor } from "./redux/stores/mainStore.js";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import {disableReactDevTools} from "@fvilers/disable-react-devtools"
+
+//This should only be enabled in production
+disableReactDevTools();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
