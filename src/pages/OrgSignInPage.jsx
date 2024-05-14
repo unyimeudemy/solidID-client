@@ -9,8 +9,40 @@ import {useSelector, useDispatch} from "react-redux"
 import { loginSuccess } from '../redux/slices/userSlice';
 import { getOrgProfile } from '../lib/getOrgProfile';
 
+import InfoIcon from '@mui/icons-material/Info';
+
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { ErrorMessage } from '../components/ErrorMessage';
 
 
+const OrgSigUpLink = styled.div`
+color: #31363F;
+display: flex;
+font-weight: 600;
+text-decoration: underline;
+margin-top: 20px;
+cursor: pointer;
+`
+
+const Notification = styled.div`
+    width: 420px;
+    height: 40px;
+    background-color: #e6e6ff;
+    border: 1px solid #0000ff;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0000ff;
+
+`
+
+const Message = styled.div`
+    font-size: small;
+    margin-left: 30px;
+    font-weight: 500;
+`;
 
  const Wrapper = styled.div`
 display: flex;
@@ -89,13 +121,13 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
-`
-
+`;
 
 
 export const OrgSignInPage = () => {
     const [orgEmail, setOrgEmail] = useState("")
     const [orgPassword, setOrgPassword] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
 
 
     const navigate = useNavigate();
@@ -112,11 +144,16 @@ export const OrgSignInPage = () => {
                     password: orgPassword
                 }
             )
-            const AccessToken = res.data.token;
-            Cookies.set("AccessToken", AccessToken, {expires: 7 * 4 * 3});
-            const userDetail = await getOrgProfile(AccessToken);
-            dispatch(loginSuccess(userDetail.data));
-            navigate("/");
+
+            if(res.data.token !== "Email or password not correct"){
+                setErrorMessage("");
+                const AccessToken = res.data.token;
+                Cookies.set("AccessToken", AccessToken, {expires: 7 * 4 * 3});
+                const userDetail = await getOrgProfile(AccessToken);
+                dispatch(loginSuccess(userDetail.data));
+                navigate("/");
+            }
+            setErrorMessage(res.data.token);
 
         }catch(error){
             console.log(error);
@@ -131,6 +168,16 @@ export const OrgSignInPage = () => {
         <Top>
         <SolidIDLogo/>
         <Title>Sign in as an organization</Title>
+        {errorMessage.length === 0?
+        <Notification>
+            <InfoOutlinedIcon/>
+            <Message>You are about to sign in as an organization NOT user</Message>
+        </Notification>:
+        <ErrorMessage
+            errorMessage={errorMessage}
+        />
+
+        }
         </Top>
         <>
         <Input
@@ -152,6 +199,12 @@ export const OrgSignInPage = () => {
             </Button>
         </Buttons>
     </Container>
+    <OrgSigUpLink
+            onClick={() => navigate("/sign_in")}
+        >
+            <InfoIcon/>
+            <div>Click here to sign in as a user</div>
+        </OrgSigUpLink>
 </Wrapper>
   )
 }

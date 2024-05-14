@@ -7,9 +7,40 @@ import {useNavigate} from "react-router-dom"
 import {useSelector, useDispatch} from "react-redux"
 import { loginSuccess } from '../redux/slices/userSlice';
 import { getOrgProfile } from '../lib/getOrgProfile';
+import InfoIcon from '@mui/icons-material/Info';
 
 
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
+
+const OrgSigUpLink = styled.div`
+color: #31363F;
+display: flex;
+font-weight: 600;
+text-decoration: underline;
+margin-top: 50px;
+cursor: pointer;
+`
+
+const Notification = styled.div`
+    width: 420px;
+    height: 40px;
+    background-color: #e6e6ff;
+    border: 1px solid #0000ff;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0000ff;
+
+`
+
+const Message = styled.div`
+    font-size: small;
+    margin-left: 30px;
+    font-weight: 500;
+`;
 
  const Wrapper = styled.div`
 display: flex;
@@ -25,7 +56,7 @@ background-color: #EEEEEE;
  const Container = styled.div`
     display: flex;
     flex-direction: column;
-    height: 500px;
+    height: auto;
     width: 500px;
     align-items: center;
     justify-content: center;
@@ -88,9 +119,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
-`
-
-
+`;
 
 export const OrgSignUpPage = () => {
     const [orgEmail, setOrgEmail] = useState("")
@@ -139,6 +168,10 @@ export const OrgSignUpPage = () => {
         <Top>
         <SolidIDLogo/>
         <Title>Sign up as an organization</Title>
+        <Notification>
+            <InfoOutlinedIcon/>
+            <Message>You are about to sign up as an organization NOT user</Message>
+        </Notification>
         </Top>
         <>
         <Input
@@ -190,6 +223,12 @@ export const OrgSignUpPage = () => {
             </Button>
         </Buttons>
     </Container>
+    <OrgSigUpLink
+        onClick={() => navigate("/sign_up")}
+        >
+            <InfoIcon/>
+            <div>Click here to sign up as a user</div>
+    </OrgSigUpLink>
 </Wrapper>
   )
 }

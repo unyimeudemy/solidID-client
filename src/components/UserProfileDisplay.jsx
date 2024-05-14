@@ -71,7 +71,8 @@ export const UserProfileDisplay = ({
     stateOfOrigin,
     viewHistory,
     viewAddOrg,
-    viewUserProfile
+    viewUserProfile,
+    setViewUserProfile
 }) => {
   return (
     <Container>
@@ -99,7 +100,9 @@ export const UserProfileDisplay = ({
                 <HistoryList/>
                 :
                 (viewAddOrg &&
-                <AddOrgForm/>
+                <AddOrgForm
+                    setViewUserProfile={setViewUserProfile}
+                />
             )
             )
         }

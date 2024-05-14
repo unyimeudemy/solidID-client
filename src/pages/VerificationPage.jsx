@@ -142,7 +142,7 @@ const [verificationToken, setVerificationToken] = useState("");
 
 const [verifiedUser, setVerifiedUser] = useState(null);
 
-console.log(verificationToken)
+console.log("verification page ")
 
 const handleVerify = async (e) => {
 e.preventDefault();

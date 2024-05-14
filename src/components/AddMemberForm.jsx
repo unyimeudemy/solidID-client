@@ -56,11 +56,11 @@ export const Button = styled.button`
 `;
 
 
-export const AddMemberForm = () => {
+export const AddMemberForm = ({handleAllMembersClicked}) => {
     const [staffName, setStaffName] = useState();
     const [staffEmail, setStaffEmail] = useState();
     const [staffRole, setStaffRole] = useState();
-    const [staffId, setStaffId] = useState();
+    const [staffID, setStaffID] = useState();
 
     const {currentUser} = useSelector((state) => state.user);
     console.log("currentUser: ", currentUser);
@@ -69,6 +69,8 @@ export const AddMemberForm = () => {
         organizationName
     } = currentUser;
 
+    console.log("staffid: ", staffID);
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
@@ -78,13 +80,12 @@ export const AddMemberForm = () => {
                     staffName ,
                     staffEmail,
                     staffRole,
-                    staffId,
+                    staffID,
                     orgName: organizationName,
                     orgEmail: email
                 }
             )
-
-            console.log("res: ", res);
+            handleAllMembersClicked();
 
         }catch(error){
             console.log(error);
@@ -113,7 +114,7 @@ export const AddMemberForm = () => {
             <Input
                 type='text'
                 placeholder='Staff ID'
-                onChange={(e) => {setStaffId(e.target.value)}}
+                onChange={(e) => {setStaffID(e.target.value)}}
             />
             
         </Inputs>

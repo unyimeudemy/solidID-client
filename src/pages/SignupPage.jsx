@@ -6,6 +6,13 @@ import Axios from '../lib/api/axios';
 import Cookies from 'js-cookie';
 import { SolidIDLogo } from '../components/SolidIDLogo';
 import InfoIcon from '@mui/icons-material/Info';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import S3FileUpload from 'react-s3';
+import { uploadFile } from 'react-s3';
+
+window.Buffer = window.Buffer || require("buffer").Buffer;
+
+
 
 const OrgSigUpLink = styled.div`
 color: #31363F;
@@ -14,6 +21,47 @@ font-weight: 600;
 text-decoration: underline;
 margin-top: 20px;
 cursor: pointer;
+`
+
+const Notification = styled.div`
+    width: 83%;
+    height: 40px;
+    background-color: #e6e6ff;
+    border: 1px solid #0000ff;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0000ff;
+
+`
+
+const Message = styled.div`
+    font-size: small;
+    margin-left: 30px;
+    font-weight: 500;
+`;
+
+const InputEmail = styled.input`
+  background-color: transparent;
+  width: 80%;
+  height: 35px;
+  outline: none;
+  color: #424656;
+  border: 1px solid #3f4a5a;
+  border-radius: 6px;
+  padding: 5px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 560;
+`;
+
+const InValidEmail = styled.div`
+    font-size: 13px;
+    font-weight: 500;
+    color:red;
+
 `
 
 export const SignupPage = () => {
@@ -30,9 +78,31 @@ export const SignupPage = () => {
     const navigate = useNavigate(); 
 
 
+    const config = {
+        bucketName: 'solididbucket',
+        dirName: 'photos', 
+        region: 'us-east-1',
+        accessKeyId: '***REMOVED***',
+        secretAccessKey: '***REMOVED***',
+    }
+
+    const upload = (e) => {
+        console.log(e[0]);
+
+        S3FileUpload.uploadFile(e[0], config)
+        .then(data => console.log("res: ", data))
+        .catch(err => console.error("err: ", err))
+    }
+
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 
     const handleNext = () => {
-        if(slide <= 3){setSlide(i => i + 1);}
+        if(isValidEmail(email)){
+            if(slide <= 3){setSlide(i => i + 1);}
+        }
     }
     const handleBack = () => {
         if(slide <= 3){setSlide(i => i - 1);}
@@ -54,7 +124,6 @@ export const SignupPage = () => {
                     stateOfOrigin
                 }
             )
-            console.log("token: ", res.data.token);
             const AccessToken = res.data.token;
             Cookies.set("AccessToken", AccessToken, {expires: 7 * 4 * 3});
             navigate("/");
@@ -70,12 +139,18 @@ export const SignupPage = () => {
         <Container>
             <SolidIDLogo/>
             <Title>Sign up</Title>
+            <Notification>
+                    <InfoOutlinedIcon/>
+                    <Message>You are about to sign up as a user NOT organization</Message>
+                </Notification>
             { slide === 1 && <>
-            <Input
+            <>
+            <InputEmail
             type='email'
             placeholder='Email'
             onChange={(e) => {setEmail(e.target.value)}}
             />
+            </>
             <Input
                 type='password'
                 placeholder='Password'
@@ -85,7 +160,10 @@ export const SignupPage = () => {
             type='password'
             placeholder='Password confirm'
             onChange={(e) => {setPasswordConfirm(e.target.value)}}
-
+            />
+            <Input
+                type="file"
+                onChange={(e) => {upload(e.target.files)}}
             />
             </>}
             { slide === 2 && <>

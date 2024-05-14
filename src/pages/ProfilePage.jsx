@@ -295,7 +295,6 @@ const handleAllMembersClicked = async () => {
 
     try{
         const res = await Axios.get("/org/all-members");
-        console.log(res.data);
         setAllMembers(res.data);
 
     }catch(error){
@@ -316,6 +315,7 @@ const handleAllMembersClicked = async () => {
                     viewHistory={viewHistory}
                     viewAddOrg={viewAddOrg}
                     viewUserProfile={viewUserProfile}
+                    setViewUserProfile={setViewUserProfile}
                 />
                 :(
                     viewProfile ?
@@ -356,7 +356,9 @@ const handleAllMembersClicked = async () => {
                             <Box>
                                 <DetailHeader>Add a member</DetailHeader>
                             </Box>
-                            <AddMemberForm/>
+                            <AddMemberForm
+                                handleAllMembersClicked={handleAllMembersClicked}
+                            />
                            
                         </Right>
                         )

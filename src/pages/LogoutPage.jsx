@@ -6,83 +6,78 @@ import {useDispatch} from "react-redux";
 import { logout } from '../redux/slices/userSlice';
 import Cookies from "js-cookie";
 
+const Container = styled.div`
+display: flex;
+flex-direction: column;
+width: 100%;
+height: 100%;
+`
+
+const InnerContainer = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+width: 100%;
+height: 100%;
+`
+
+const Wrapper = styled.div`
+height: 50%;
+width: 65%;
+display: flex;
+
+`
+
+const Text = styled.div`
+width: 70%;
+height: 100%;
+background-color: transparent;
+`
+
+const Divider = styled.div`
+width: 0.3%;
+height: 100%;
+background-color: #76ABAE;
+`
+
+const ButtonContainer = styled.div`
+width: 29.7%;
+height: 100%;
+background-color: transparent;
+display: flex;
+align-items: center;
+justify-content: center;
+`
+
+const Title = styled.div`
+color: #263f40;
+font-weight: 700;
+font-size: 40px;
+`
+
+const Explanation = styled.div`
+    color: #31363F;
+font-weight: 500;
+font-size: 20px;
+margin-top: 30px;
+`
+
+const RedMarker = styled.span`
+color: red;
+font-weight: 700;
+`
+
+const Option = styled.div`
+color: green;
+font-weight: 600;
+font-size: 15px;
+margin-top: 120px;
+text-decoration: underline;
+cursor: pointer;
+`
 
 
-export const LogoutPage = () => {
-
-    const Container = styled.div`
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-    `
-
-    const InnerContainer = styled.div`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    `
-
-    const Wrapper = styled.div`
-    height: 50%;
-    width: 65%;
-    display: flex;
-
-    `
-
-    const Text = styled.div`
-        width: 70%;
-        height: 100%;
-        background-color: transparent;
-    `
-
-    const Divider = styled.div`
-        width: 0.3%;
-        height: 100%;
-        background-color: #76ABAE;
-    `
-
-    const ButtonContainer = styled.div`
-        width: 29.7%;
-        height: 100%;
-        background-color: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    `
-
-    const Title = styled.div`
-        color: #263f40;
-        font-weight: 700;
-        font-size: 40px;
-    `
-
-    const Explanation = styled.div`
-            color: #31363F;
-        font-weight: 500;
-        font-size: 20px;
-        margin-top: 30px;
-    `
-
-    const RedMarker = styled.span`
-        color: red;
-        font-weight: 700;
-    `
-
-    const Option = styled.div`
-        color: green;
-        font-weight: 600;
-        font-size: 15px;
-        margin-top: 120px;
-        text-decoration: underline;
-        cursor: pointer;
-
-    `
-
-    
 const Button = styled.button`
 border-radius: 10px;
 width: 200px;
@@ -101,6 +96,10 @@ justify-content: center;
 gap: 5px;
 /* box-shadow: 0px 6px 10px hsl(0, 0%, 100%); */
 `
+
+export const LogoutPage = () => {
+
+
 const navigate = useNavigate();
 
 const dispatch = useDispatch();

@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import styled from "styled-components"
 import Axios from '../lib/api/axios'
 import {useSelector} from "react-redux"
-import {useNavigate} from "react-router-dom";
 
 const Container = styled.div`
     height: 100%;
@@ -72,13 +71,12 @@ const DetailHeader = styled.div`
 `
 
 
-export const AddOrgForm = () => {
+export const AddOrgForm = ({setViewUserProfile}) => {
     const [orgName, setOrgName] = useState();
     const [orgEmail, setOrgEmail] = useState();
     const [staffRole, setStaffRole] = useState();
     const [staffId, setStaffId] = useState();
 
-    const navigate = useNavigate();
 
     const {currentUser} = useSelector((state) => state.user);
     const {
@@ -101,7 +99,8 @@ export const AddOrgForm = () => {
                     orgEmail
                 }
             )
-            navigate("/profile");
+            setViewUserProfile(true);
+
 
         }catch(error){
             console.log(error);

@@ -106,7 +106,7 @@ console.log("currentUser: ", currentUser);
             <Buttons>
 
             { currentUser != null ?
-                 <Button
+                currentUser.role !== "ORG" && <Button
                  onClick={() => navigate("/verify")}
                  >Verify Identity</Button> :
                  <SigUpButton
